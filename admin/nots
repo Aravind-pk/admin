@@ -1,0 +1,362 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+	font-family: Arial;
+	width: 550px;
+}
+
+.outer-container {
+	background: #F0F0F0;
+	border: #e0dfdf 1px solid;
+	padding: 40px 20px;
+	border-radius: 2px;
+}
+
+.btn-submit {
+	background: #333;
+	border: #1d1d1d 1px solid;
+	border-radius: 2px;
+	color: #f0f0f0;
+	cursor: pointer;
+	padding: 5px 20px;
+	font-size: 0.9em;
+}
+
+.tutorial-table {
+	margin-top: 40px;
+	font-size: 0.8em;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.tutorial-table th {
+	background: #f0f0f0;
+	border-bottom: 1px solid #dddddd;
+	padding: 8px;
+	text-align: left;
+}
+
+.tutorial-table td {
+	background: #FFF;
+	border-bottom: 1px solid #dddddd;
+	padding: 8px;
+	text-align: left;
+}
+
+#response {
+	padding: 10px;
+	margin-top: 10px;
+	border-radius: 2px;
+	display: none;
+}
+
+.success {
+	background: #c7efd9;
+	border: #bbe2cd 1px solid;
+}
+
+.error {
+	background: #fbcfcf;
+	border: #f3c6c7 1px solid;
+}
+
+div#response.display-block {
+	display: block;
+}
+</style>
+</head>
+
+<body>
+    <h2>Import Excel File into MySQL Database using PHP</h2>
+
+    <div class="outer-container">
+        <form action="" method="post" name="frmExcelImport"
+            id="frmExcelImport" enctype="multipart/form-data">
+            <div>
+                <label>Choose Excel File</label> <input type="file"
+                    name="file" id="file" accept=".xls,.xlsx">
+                <button type="submit" id="submit" name="import"
+                    class="btn-submit">Import</button>
+
+            </div>
+
+        </form>
+
+    </div>
+    <div id="response"
+        class="<?php if(!empty($type)) { echo $type . " display-block"; } ?>"><?php if(!empty($message)) { echo $message; } ?></div>
+
+
+
+
+</body>
+</html> -->
+
+
+<td>
+                                            <?php if($result->status == 1)
+                                                    {?>
+                                                    <a href="userlist.php?confirm=<?php echo htmlentities($result->id);?>" onclick="return confirm('Do you really want to Un-Confirm the Account')">Confirmed <i class="fa fa-check-circle"></i></a> 
+                                                    <?php } else {?>
+                                                    <a href="userlist.php?unconfirm=<?php echo htmlentities($result->id);?>" onclick="return confirm('Do you really want to Confirm the Account')">Un-Confirmed <i class="fa fa-times-circle"></i></a>
+                                                    <?php } ?>
+</td>
+                                            </td>
+
+
+											<?php
+include('includes/config.php');
+if(isset($_POST['done']))
+{
+	// echo "<script type='text/javascript'>alert('1 Updated Succesfully');</script>";
+$file = $_FILES['image']['name'];
+$file_loc = $_FILES['image']['tmp_name'];
+$folder="images/"; 
+$new_file_name = strtolower($file);
+$final_file=str_replace(' ','-',$new_file_name);
+
+$name=$_POST['name'];
+$position=$_POST['position'];
+$category=$_POST['category'];
+echo "<script type='text/javascript'>alert('.$category.');</script>";
+if(move_uploaded_file($file_loc,$folder.$final_file))
+	{
+		$image=$final_file;
+    }
+$sql ="INSERT INTO execom(name, position, category, image) VALUES(:name, :position, :category, :image)";
+$query= $dbh -> prepare($sql);
+$query-> bindParam(':name', $name, PDO::PARAM_STR);
+$query-> bindParam(':position', $position, PDO::PARAM_STR);
+$query-> bindParam(':category', $category, PDO::PARAM_STR);
+$query-> bindParam(':image', $image, PDO::PARAM_STR);
+$query->execute();
+$lastInsertId = $dbh->lastInsertId();
+echo "<script type='text/javascript'>alert('.$lastInsertId.');</script>";
+if($lastInsertId)
+{
+echo "<script type='text/javascript'>alert('execom Updated Succesfully');</script>";
+echo "<script type='text/javascript'> document.location = 'add-execom.php'; </script>";
+}
+else 
+{
+$error="Something went wrong. Please try again";
+}
+
+}
+?>
+
+<!doctype html>
+<html lang="en" class="no-js">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<meta name="post" content="">
+	<meta name="author" content="">
+	<meta name="theme-color" content="#3e454c">
+	
+	<title>Edit execom</title>
+
+	<!-- Font awesome -->
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<!-- Sandstone Bootstrap CSS -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<!-- Bootstrap Datatables -->
+	<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
+	<!-- Bootstrap social button library -->
+	<link rel="stylesheet" href="css/bootstrap-social.css">
+	<!-- Bootstrap select -->
+	<link rel="stylesheet" href="css/bootstrap-select.css">
+	<!-- Bootstrap file input -->
+	<link rel="stylesheet" href="css/fileinput.min.css">
+	<!-- Awesome Bootstrap checkbox -->
+	<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
+	<!-- Admin Stye -->
+	<link rel="stylesheet" href="css/style.css">
+
+	<script type= "text/javascript" src="../vendor/countries.js"></script>
+	<style>
+.errorWrap {
+    padding: 10px;
+    margin: 0 0 20px 0;
+	background: #dd3d36;
+	color:#fff;
+    -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+}
+.succWrap{
+    padding: 10px;
+    margin: 0 0 20px 0;
+	background: #5cb85c;
+	color:#fff;
+    -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+}
+		</style>
+</head>
+
+<body>
+
+	<div class="ts-main-content">
+		<div class="content-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<h3 class="page-title">Edit User </h3>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="panel panel-default">
+									<div class="panel-heading">Edit Info</div>
+
+									<div class="panel-body">
+<form method="post" class="form-horizontal" enctype="multipart/form-data" name="imgform">
+<div class="form-group">
+<label class="col-sm-2 control-label">Name</label>
+<div class="col-sm-5 col-lg-10">
+<input type="text" name="name" class="form-control">
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">Post</label>
+<div class="col-sm-5 col-lg-10">
+<input type="text" name="position" class="form-control">
+</div>
+</div>
+
+<div class="form-group">
+<label class="col-sm-2 control-label">Category<span style="color:red">*</span></label>
+<div class="col-sm-5 col-lg-10">
+<select name="category" class="form-control" required>
+<option value="">Select</option>
+<option value="Senior execom">Senior Execom</option>
+<option value="Junior execom">Junior Execom</option>
+<option value="Web Developer">Web Developer</option>
+</select>
+</div>
+</div>
+
+<div class="form-group">
+<label class="col-sm-2 control-label">Image</label>
+<div class="col-sm-5 col-lg-10">
+<input type="file" name="image" class="form-control">
+</div>
+</div>
+
+
+
+<div class="form-group">
+	<div class="col-sm-8 col-sm-offset-2">
+		<button class="btn btn-primary" name="done" type="submit">Add Execom</button>
+	</div>
+</div>
+
+</form>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					
+
+					</div>
+				</div>
+				
+			
+
+			</div>
+		</div>
+	</div>
+
+	<!-- Loading Scripts -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap-select.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.dataTables.min.js"></script>
+	<script src="js/dataTables.bootstrap.min.js"></script>
+	<script src="js/Chart.min.js"></script>
+	<script src="js/fileinput.js"></script>
+	<script src="js/chartData.js"></script>
+	<script src="js/main.js"></script>
+	<script type="text/javascript">
+				 $(document).ready(function () {          
+					setTimeout(function() {
+						$('.succWrap').slideUp("slow");
+					}, 3000);
+					});
+	</script>
+
+</body>
+</html>
+
+<input type="email" name="email" class="form-control" required value="<?php echo htmlentities($result->email);?>">
+<input type="text" name="designation" class="form-control" required value="<?php echo htmlentities($result->designation);?>">
+<input type="text" name="mobile" class="form-control" required value="<?php echo htmlentities($result->mobile);?>">
+
+<div class="site-wrap">
+
+    <div class="site-mobile-menu">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div> <!-- .site-mobile-menu -->
+
+
+    <div class="site-navbar-wrap js-site-navbar bg-white">
+
+      <div class="container">
+        <div class="site-navbar bg-light">
+          <div class="py-1">
+            <div class="row align-items-center">
+              <div class="col-2">
+                <h2 class="mb-0 site-logo"><a href="index.html"><img src="images/iste.png" alt="ISTE TKMCE" width="80"
+                      height="80"></a></h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <!-- Section to work on new Previous Events Start -->
+    <div class="site-section block-14 bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 mx-auto text-center mb-5 section-heading">
+            <h2>Previous Events</h2>
+          </div>
+        </div>
+        <div class="row">
+          <?php 
+      $sql = "SELECT * FROM `events`";
+      $query = $dbh -> prepare($sql);
+      $query->execute();
+      $results=$query->fetchAll(PDO::FETCH_OBJ);
+      if($query->rowCount() > 0)
+      {
+      foreach($results as $result)
+      {				?>
+          <div class="col-md-4 col-sm-12 mb-3 ">
+            <div class="card">
+              <img src="./admin/images/<?php echo htmlentities($result->image) ?>" class="card-img-top" alt="App Development WS">
+              <div class="card-body">
+                <h5 class="card-title"><?php echo htmlentities($result->name) ?></h5>
+                <p class="card-text">
+                  <blockquote>&ldquo;<?php echo htmlentities($result->description) ?><br><br>
+                    &nbsp;
+                    &rdquo;
+                  </blockquote>
+                </p>
+                <!-- <a href="#" class="btn btn-primary">Know More</a> -->
+              </div>
+            </div>
+          </div>
+          <?php }}?>
+        </div>
+      </div>
