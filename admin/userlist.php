@@ -120,6 +120,7 @@ if (strlen($_SESSION['alogin']) == 0 && strlen($_SESSION['register'])==0) {
 												<th>EMAIL</th>
 												<th>BATCH</th>
 												<th>PHONE</th>
+												<th>Verification date</th>
 											</tr>
 										</thead>
 
@@ -141,6 +142,10 @@ if (strlen($_SESSION['alogin']) == 0 && strlen($_SESSION['register'])==0) {
 														<td><?php echo htmlentities($result->email); ?></td>
 														<td><?php echo htmlentities($result->batch); ?></td>
 														<td><?php echo htmlentities($result->phone); ?></td>
+														<td><?php echo htmlentities($result->flag); ?></td>
+
+
+														
 														<td>
 															<br>
 															<a href="edit-user.php?edit=<?php echo $result->id; ?>" onclick="return confirm('Do you want to Edit');"><i class="fa fa-pencil" style="color:blue">edit</i></a>&nbsp;&nbsp;
