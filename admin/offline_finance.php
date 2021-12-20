@@ -113,7 +113,7 @@ if (strlen($_SESSION['alogin']) == 0 && strlen($_SESSION['register'])==0 ) {
 									<?php if ($error) { ?><div class="errorWrap" id="msgshow"><?php echo htmlentities($error); ?> </div><?php } else if ($msg) { ?><div class="succWrap" id="msgshow"><?php echo htmlentities($msg); ?> </div><?php } ?>
 									<?php 
 											$flag=0;
-											$sql = "SELECT * from `regstart` WHERE `flag` != :flag";
+											$sql = "SELECT * from `regstart` WHERE `flag` != 0";
 											$query = $dbh->prepare($sql);
 											$query-> bindParam(':flag', $flag, PDO::PARAM_STR);  
 											$query->execute();
