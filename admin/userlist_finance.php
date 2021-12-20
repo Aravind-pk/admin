@@ -19,7 +19,7 @@ if (strlen($_SESSION['alogin']) == 0 && strlen($_SESSION['finance']) == 0) {
 
 	if (isset($_REQUEST['unconfirm'])) {
 		$aeid = $_GET['unconfirm'];
-		$memstatus = '-';
+		$memstatus = '--';
 		$sql = "UPDATE `reg` SET flag=:status WHERE  id=:aeid";
 		$query = $dbh->prepare($sql);
 		$query->bindParam(':status', $memstatus, PDO::PARAM_STR);
@@ -116,6 +116,7 @@ if (strlen($_SESSION['alogin']) == 0 && strlen($_SESSION['finance']) == 0) {
 											<tr>
 												<th>#</th>
 												<th>ID</th>
+												<th>EMAIL</th>
 												<th>PRODUCT_ID</th>
 												<th>PAYMENT_ID</th>
 												<th>CONTACT_NUMBER</th>
@@ -136,6 +137,7 @@ if (strlen($_SESSION['alogin']) == 0 && strlen($_SESSION['finance']) == 0) {
 													<tr>
 														<td><?php echo htmlentities($cnt); ?></td>
 														<td><?php echo htmlentities($result->id); ?></td>
+														<td><?php echo htmlentities($result->email); ?></td>
 														<td><?php echo htmlentities($result->order_id); ?></td>
 														<td><?php echo htmlentities($result->payment_id); ?></td>
 														<td><?php echo htmlentities($result->phone); ?></td>
