@@ -103,11 +103,11 @@ if (strlen($_SESSION['alogin']) == 0 && strlen($_SESSION['register'])==0) {
 					<div class="row">
 						<div class="col-sm-1 col-lg-12 col-md-12">
 
-							<h2 class="page-title">Manage Users</h2>
+							<h2 class="page-title">Paid Students</h2>
 
 							<!-- Zero Configuration Table -->
 							<div class="panel panel-default">
-							<a href="offline_finance.php" class="block-anchor panel-footer">Offline payment details <i class="fa fa-arrow-right"></i></a>
+							<a href="offline_finance.php" class="block-anchor panel-footer">Offline paid students<i class="fa fa-arrow-right"></i></a>
 								<div class="panel-heading">List Users</div>
 								<div class="panel-body">
 									<?php if ($error) { ?><div class="errorWrap" id="msgshow"><?php echo htmlentities($error); ?> </div><?php } else if ($msg) { ?><div class="succWrap" id="msgshow"><?php echo htmlentities($msg); ?> </div><?php } ?>

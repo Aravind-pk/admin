@@ -103,7 +103,7 @@ if (strlen($_SESSION['alogin']) == 0 && strlen($_SESSION['register'])==0 ) {
 					<div class="row">
 						<div class="col-sm-1 col-lg-12 col-md-12">
 
-							<h2 class="page-title">Manage Users</h2>
+							<h2 class="page-title">Unpaid Students</h2>
 
 							<!-- Zero Configuration Table -->
 							<div class="panel panel-default">
@@ -119,6 +119,7 @@ if (strlen($_SESSION['alogin']) == 0 && strlen($_SESSION['register'])==0 ) {
 												<th>EMAIL</th>
 												<th>BATCH</th>
 												<th>PHONE</th>
+												<th>READY TO PAY</th>
 											</tr>
 										</thead>
 
@@ -140,6 +141,7 @@ if (strlen($_SESSION['alogin']) == 0 && strlen($_SESSION['register'])==0 ) {
 														<td><?php echo htmlentities($result->email); ?></td>
 														<td><?php echo htmlentities($result->batch); ?></td>
 														<td><?php echo htmlentities($result->phone); ?></td>
+														<td><?php echo htmlentities($result->flag); ?></td>
 														<td>
                                                     <a href="unpaid.php?confirm=<?php echo htmlentities($result->phone);?>" onclick="return confirm('Do you really want to Verify Offline Payment')">Verify <i class="fa fa-check-circle"></i></a> 
                                                     &emsp;
