@@ -58,37 +58,89 @@ if (strlen($_SESSION['alogin']) == 0) {
 												<div class="panel-body bk-primary text-light">
 													<div class="stat-panel text-center">
 														<?php
-														$sql = "SELECT * from `register` r WHERE `flag` = 2 or EXISTS ( SELECT * FROM payments t WHERE t.user_id = r.email and flag = 0 )";
+														$sql = "SELECT * from `reg`  WHERE 1";
 														$query = $dbh->prepare($sql);
 														$query->execute();
 														$results = $query->fetchAll(PDO::FETCH_OBJ);
 														$bg = $query->rowCount();
 														?>
 														<div class="stat-panel-number h1 "><?php echo htmlentities($bg); ?></div>
-														<div class="stat-panel-title text-uppercase">Total Users</div>
+														<div class="stat-panel-title text-uppercase">Total online paid</div>
 													</div>
 												</div>
 												<a href="finance.php" class="block-anchor panel-footer">Full Detail <i class="fa fa-arrow-right"></i></a>
 											</div>
 										</div>
+
+
+
+
 										<div class="col-md-3">
 											<div class="panel panel-default">
 												<div class="panel-body bk-primary text-light">
 													<div class="stat-panel text-center">
 														<?php
-														$sql = "SELECT * FROM register r WHERE `flag` = 0 AND NOT EXISTS ( SELECT * FROM payments t WHERE t.user_id = r.email and flag = 0)";
+														$sql = "SELECT * from `regstart`  WHERE flag != 0";
 														$query = $dbh->prepare($sql);
 														$query->execute();
 														$results = $query->fetchAll(PDO::FETCH_OBJ);
 														$bg = $query->rowCount();
 														?>
 														<div class="stat-panel-number h1 "><?php echo htmlentities($bg); ?></div>
-														<div class="stat-panel-title text-uppercase">Total Unpaid</div>
+														<div class="stat-panel-title text-uppercase">Total Ofline paid</div>
 													</div>
 												</div>
-												<a href="fin.php" class="block-anchor panel-footer">Full Detail <i class="fa fa-arrow-right"></i></a>
+												<a href="finance.php" class="block-anchor panel-footer">Full Detail <i class="fa fa-arrow-right"></i></a>
 											</div>
 										</div>
+
+
+
+
+										<div class="col-md-3">
+											<div class="panel panel-default">
+												<div class="panel-body bk-primary text-light">
+													<div class="stat-panel text-center">
+														<?php
+														$sql = "SELECT * from `reg`  WHERE flag != '--'";
+														$query = $dbh->prepare($sql);
+														$query->execute();
+														$results = $query->fetchAll(PDO::FETCH_OBJ);
+														$bg = $query->rowCount();
+														?>
+														<div class="stat-panel-number h1 "><?php echo htmlentities($bg); ?></div>
+														<div class="stat-panel-title text-uppercase">online paid and verified</div>
+													</div>
+												</div>
+												<a href="finance.php" class="block-anchor panel-footer">Full Detail <i class="fa fa-arrow-right"></i></a>
+											</div>
+										</div>
+
+
+
+										<div class="col-md-3">
+											<div class="panel panel-default">
+												<div class="panel-body bk-primary text-light">
+													<div class="stat-panel text-center">
+														<?php
+														$sql = "SELECT * FROM `regstart` r WHERE flag = 0  AND NOT EXISTS ( SELECT * FROM `reg` t WHERE t.phone = r.phone)";
+														$query = $dbh->prepare($sql);
+														$query->execute();
+														$results = $query->fetchAll(PDO::FETCH_OBJ);
+														$bg = $query->rowCount();
+														?>
+														<div class="stat-panel-number h1 "><?php echo htmlentities($bg); ?></div>
+														<div class="stat-panel-title text-uppercase">Unpaid (visitors)</div>
+													</div>
+												</div>
+												<a href="finance.php" class="block-anchor panel-footer">Full Detail <i class="fa fa-arrow-right"></i></a>
+											</div>
+										</div>
+
+
+
+
+
 									</div>
 									<div class="row">
 										<h1>MECHANICAL</h1>
@@ -113,6 +165,8 @@ if (strlen($_SESSION['alogin']) == 0) {
 														
 														<div class="stat-panel-number h1 "><?php echo htmlentities($bg); ?></div>
 														
+														<div class="stat-panel-title text-uppercase">TOTAL USERS : M1A</div>
+
 														<div class="stat-panel-title text-uppercase">TOTAL USERS : M1A</div>
 														
 

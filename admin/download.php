@@ -7,6 +7,8 @@ include('includes/config.php');
 if (strlen($_SESSION['alogin']) == 0) {
 	header("Location: index.php"); 
 } else { ?>
+
+	<button onclick = "downcsv">Today online verified</button>
 	<table border="1">
 		<thead>
 			<tr>
