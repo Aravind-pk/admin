@@ -9,11 +9,25 @@ if (strlen($_SESSION['alogin']) == 0) {
 	header("Location: index.php"); 
 } else { ?>
 
-<button>hello</button>
+<center>
+
+
+<div style="height:100px"></div>
+
+<h3> Download exel</h3>
 
 
 
-	<table border="1">
+<button onclick="download_table_as_csv('online');">Online paid</button>
+<button onclick="download_table_as_csv('offlinepaid');">Offline paid</button>
+<button onclick="download_table_as_csv('offline');"> Upaid & waiting for online payment</button>
+
+</center>
+<div style="height:100px"></div>
+
+
+
+	<table id="online" border="1">
 
 		<thead>	
 			<tr>
@@ -32,7 +46,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 				<th>service 2</th>
 				<th>Service 3</th>
 				<th>Amount</th>
-				<th>verification status date of verification</th>
+				<th>verification status /date of verification</th>
 			</tr>
 		</thead>
 
@@ -53,8 +67,8 @@ if (strlen($_SESSION['alogin']) == 0) {
 			<td>' . $Email = $result->email . '</td>
 			<td>' . $Dob = $result->dob . '</td> 
 			<td>' . $Batch = $result->batch . '</td> 
-			<td>' . $Address = $result->address . '</td> 
-			<td>' . $Phone = $result->mobile . '</td> 
+			<td>' . $Address = $result->addr . '</td> 
+			<td>' . $Phone = $result->phone . '</td> 
 			<td>' . $Inter1 = $result->inter1 . '</td> 
 			<td>' . $Inter2 = $result->inter2 . '</td>
 			<td>' . $Car1 = $result->car1 . '</td> 
@@ -76,7 +90,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 
 
 
-	<table border="1">
+	<table id="offline" border="1">
 
 		<thead>	
 			<tr>
@@ -114,8 +128,8 @@ if (strlen($_SESSION['alogin']) == 0) {
 			<td>' . $Email = $result->email . '</td>
 			<td>' . $Dob = $result->dob . '</td> 
 			<td>' . $Batch = $result->batch . '</td> 
-			<td>' . $Address = $result->address . '</td> 
-			<td>' . $Phone = $result->mobile . '</td> 
+			<td>' . $Address = $result->addr . '</td> 
+			<td>' . $Phone = $result->phone . '</td> 
 			<td>' . $Inter1 = $result->inter1 . '</td> 
 			<td>' . $Inter2 = $result->inter2 . '</td>
 			<td>' . $Car1 = $result->car1 . '</td> 
@@ -136,11 +150,11 @@ if (strlen($_SESSION['alogin']) == 0) {
 
 
 
-	<table border="1">
+	<table id="offlinepaid" border="1">
 
 <thead>	
 	<tr>
-		<th>Name</th>
+		<th>Name</th>		
 		<th>Email</th>
 		<th>Dob</th>
 		<th>Batch</th>
@@ -173,8 +187,8 @@ if ($query->rowCount() > 0) {
 	<td>' . $Email = $result->email . '</td>
 	<td>' . $Dob = $result->dob . '</td> 
 	<td>' . $Batch = $result->batch . '</td> 
-	<td>' . $Address = $result->address . '</td> 
-	<td>' . $Phone = $result->mobile . '</td> 
+	<td>' . $Address = $result->addr . '</td> 
+	<td>' . $Phone = $result->phone . '</td> 
 	<td>' . $Inter1 = $result->inter1 . '</td> 
 	<td>' . $Inter2 = $result->inter2 . '</td>
 	<td>' . $Car1 = $result->car1 . '</td> 
@@ -189,6 +203,42 @@ if ($query->rowCount() > 0) {
 
 ?>
 </table>
+
+
+<script>
+
+
+function download_table_as_csv(table_id, separator = ',') {
+    // Select rows from table_id
+    var rows = document.querySelectorAll('table#' + table_id + ' tr');
+    // Construct csv
+    var csv = [];
+    for (var i = 0; i < rows.length; i++) {
+        var row = [], cols = rows[i].querySelectorAll('td, th');
+        for (var j = 0; j < cols.length; j++) {
+            // Clean innertext to remove multiple spaces and jumpline (break csv)
+            var data = cols[j].innerText.replace(/(\r\n|\n|\r)/gm, '').replace(/(\s\s)/gm, ' ')
+            // Escape double-quote with double-double-quote (see https://stackoverflow.com/questions/17808511/properly-escape-a-double-quote-in-csv)
+            data = data.replace(/"/g, '""');
+            // Push escaped string
+            row.push('"' + data + '"');
+        }
+        csv.push(row.join(separator));
+    }
+    var csv_string = csv.join('\n');
+    // Download it
+    var filename = 'export_' + table_id + '_' + new Date().toLocaleDateString() + '.csv';
+    var link = document.createElement('a');
+    link.style.display = 'none';
+    link.setAttribute('target', '_blank');
+    link.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv_string));
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+</script>
+
 
 
 
