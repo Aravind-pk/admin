@@ -46,6 +46,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 				<th>service 2</th>
 				<th>Service 3</th>
 				<th>Amount</th>
+				<th>Reg date</th>
 				<th>verification status /date of verification</th>
 			</tr>
 		</thead>
@@ -77,6 +78,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 			<td>' . $Ser2 = $result->ser2 . '</td> 
 			<td>' . $Ser3 = $result->ser3 . '</td>
 			<td>' . $Amount = $result->amount . '</td> 
+			<td>' . $RegDate = $result->date. '</td> 	
 			<td>' . $Date = $result->flag. '</td> 					
 			</tr>  
 			';
@@ -107,6 +109,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 				<th>Service 1</th>
 				<th>service 2</th>
 				<th>Service 3</th>
+				<th>Reg date</th>
 				<th>Ready for payment</th>
 
 			</tr>
@@ -137,6 +140,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 			<td>' . $Ser1 = $result->ser1 . '</td>
 			<td>' . $Ser2 = $result->ser2 . '</td> 
 			<td>' . $Ser3 = $result->ser3 . '</td>
+			<td>' . $Regdate = $result->date . '</td>
 			<td>' . $Date = $result->flag. '</td> 		
 			</tr>  
 			';

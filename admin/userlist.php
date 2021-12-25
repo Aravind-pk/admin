@@ -120,7 +120,8 @@ if (strlen($_SESSION['alogin']) == 0 && strlen($_SESSION['register'])==0) {
 												<th>EMAIL</th>
 												<th>BATCH</th>
 												<th>PHONE</th>
-												<th>Verification date</th>
+												<th>Reg date</th>
+												<th>Verif date</th>
 											</tr>
 										</thead>
 
@@ -142,6 +143,7 @@ if (strlen($_SESSION['alogin']) == 0 && strlen($_SESSION['register'])==0) {
 														<td><?php echo htmlentities($result->email); ?></td>
 														<td><?php echo htmlentities($result->batch); ?></td>
 														<td><?php echo htmlentities($result->phone); ?></td>
+														<td><?php echo htmlentities($result->date); ?></td>
 														<td><?php echo htmlentities($result->flag); ?></td>
 
 
