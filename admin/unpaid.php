@@ -88,6 +88,17 @@ if (strlen($_SESSION['alogin']) == 0 && strlen($_SESSION['register'])==0 ) {
 				-webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
 				box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
 			}
+			#myInput {
+			background-image: url('/css/searchicon.png');
+			background-position: 10px 10px;
+			background-repeat: no-repeat;
+			width: 100%;
+			font-size: 16px;
+			padding: 12px 20px 12px 40px;
+			border: 1px solid #ddd;
+			margin-bottom: 12px;
+			}
+
 		</style>
 
 	</head>
@@ -109,7 +120,16 @@ if (strlen($_SESSION['alogin']) == 0 && strlen($_SESSION['register'])==0 ) {
 							<div class="panel panel-default">
 								<div class="panel-heading">List Users</div>
 								<div class="panel-body">
+
+
+
+
 									<?php if ($error) { ?><div class="errorWrap" id="msgshow"><?php echo htmlentities($error); ?> </div><?php } else if ($msg) { ?><div class="succWrap" id="msgshow"><?php echo htmlentities($msg); ?> </div><?php } ?>
+
+
+
+									<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+
 									<table id="zctb" class="display table table-striped table-bordered table-hover table-responsive-md table-responsive-sm" cellspacing="0" width="100%">
 										<thead>
 											<tr>
@@ -127,7 +147,7 @@ if (strlen($_SESSION['alogin']) == 0 && strlen($_SESSION['register'])==0 ) {
 										<tbody>
 
 											<?php 
-											$sql = "SELECT * FROM `regstart` r WHERE flag = 0  AND NOT EXISTS ( SELECT * FROM `reg` t WHERE t.email = r.email)";
+											$sql = "SELECT * FROM `regstart` r WHERE flag = 0  AND NOT EXISTS ( SELECT * FROM `reg` t WHERE t.email = r.email)  ;";
 											// $sql = "SELECT * FROM register r WHERE NOT EXISTS ( SELECT * FROM payments t WHERE t.user_id = r.email and flag = 0) ";
 											$query = $dbh->prepare($sql);
 											$query->execute();
@@ -167,6 +187,29 @@ if (strlen($_SESSION['alogin']) == 0 && strlen($_SESSION['register'])==0 ) {
 				</div>
 			</div>
 		</div>
+
+		<script >
+
+
+		function myFunction() {
+		var input, filter, table, tr, td, i, txtValue;
+		input = document.getElementById("myInput");
+		filter = input.value.toUpperCase();
+		table = document.getElementById("zctb");
+		tr = table.getElementsByTagName("tr");
+		for (i = 0; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td")[2];
+			if (td) {
+			txtValue = td.textContent || td.innerText;
+			if (txtValue.toUpperCase().indexOf(filter) > -1) {
+				tr[i].style.display = "";
+			} else {
+				tr[i].style.display = "none";
+			}
+			}       
+		}
+		}
+		</script>
 
 		<!-- Loading Scripts -->
 		<script src="js/jquery.min.js"></script>
