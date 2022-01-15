@@ -11,6 +11,22 @@ if (strlen($_SESSION['alogin']) == 0) {
 
 <center>
 
+<style>
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+</style>
+
 
 <div style="height:100px"></div>
 
@@ -21,6 +37,9 @@ if (strlen($_SESSION['alogin']) == 0) {
 <button onclick="download_table_as_csv('online');">Online paid</button>
 <button onclick="download_table_as_csv('offlinepaid');">Offline paid</button>
 <button onclick="download_table_as_csv('offline');"> Upaid & waiting for online payment</button>
+<br>
+<button onclick="download_table_as_csv('onlinepaidoffline');"> Choose ofline but paid online</button>
+
 
 </center>
 <div style="height:100px"></div>
@@ -154,7 +173,9 @@ if (strlen($_SESSION['alogin']) == 0) {
 
 
 
-	<table id="offlinepaid" border="1">
+
+
+<table id="offlinepaid" border="1">
 
 <thead>	
 	<tr>
@@ -207,6 +228,95 @@ if ($query->rowCount() > 0) {
 
 ?>
 </table>
+
+
+
+
+
+
+
+
+
+<table id="onlinepaidoffline" border="1">
+
+<thead>	
+	<tr>
+		<th>#</th>
+		<th>Name</th>
+		<th>Email</th>
+		<th>Dob</th>
+		<th>Batch</th>
+		<th>Address</th>
+		<th>Phone</th>
+		<th>Interest 1</th>
+		<th>Interest 2</th>
+		<th>Preference 1</th>
+		<th>Preference 2</th>
+		<th>Service 1</th>
+		<th>service 2</th>
+		<th>Service 3</th>
+		<th>Amount</th>
+		<th>Reg date</th>
+		<th>verification status /date of verification</th>
+	</tr>
+</thead>
+
+<?php
+$filename = "Registered Users";
+$sql = "SELECT *
+FROM reg
+WHERE email IN
+(
+SELECT email
+FROM reg
+INTERSECT
+SELECT email
+FROM regstart
+);";	
+$query = $dbh->prepare($sql);
+$query->execute();
+$results = $query->fetchAll(PDO::FETCH_OBJ);
+$cnt = 1;
+if ($query->rowCount() > 0) {
+	foreach ($results as $result) {
+
+		echo '  	
+	<tr>  
+	<td>' . $Id = $result->id . '</td> 
+	<td>' . $Name = $result->name . '</td> 
+	<td>' . $Email = $result->email . '</td>
+	<td>' . $Dob = $result->dob . '</td> 
+	<td>' . $Batch = $result->batch . '</td> 
+	<td>' . $Address = $result->addr . '</td> 
+	<td>' . $Phone = $result->phone . '</td> 
+	<td>' . $Inter1 = $result->inter1 . '</td> 
+	<td>' . $Inter2 = $result->inter2 . '</td>
+	<td>' . $Car1 = $result->car1 . '</td> 
+	<td>' . $Car2 = $result->car2 . '</td>
+	<td>' . $Ser1 = $result->ser1 . '</td>
+	<td>' . $Ser2 = $result->ser2 . '</td> 
+	<td>' . $Ser3 = $result->ser3 . '</td>
+	<td>' . $Amount = $result->amount . '</td> 
+	<td>' . $RegDate = $result->date. '</td> 	
+	<td>' . $Date = $result->flag. '</td> 					
+	</tr>  
+	';
+	}
+}
+?>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <script>
