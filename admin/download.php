@@ -93,9 +93,9 @@ tr:nth-child(even){background-color: #f2f2f2}
 			<td>' . $Inter2 = $result->inter2 . '</td>
 			<td>' . $Car1 = $result->car1 . '</td> 
 			<td>' . $Car2 = $result->car2 . '</td>
-			<td>' . $Ser1 = $result->ser1 . '</td>
-			<td>' . $Ser2 = $result->ser2 . '</td> 
-			<td>' . $Ser3 = $result->ser3 . '</td>
+			<td>' . $Ser1 = $result->serv1 . '</td>
+			<td>' . $Ser2 = $result->serv2 . '</td> 
+			<td>' . $Ser3 = $result->serv3 . '</td>
 			<td>' . $Amount = $result->amount . '</td> 
 			<td>' . $RegDate = $result->date. '</td> 	
 			<td>' . $Date = $result->flag. '</td> 					
