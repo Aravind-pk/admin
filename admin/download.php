@@ -272,6 +272,7 @@ FROM reg
 INTERSECT
 SELECT email
 FROM regstart
+	WHERE flag = 'ready'
 );";	
 $query = $dbh->prepare($sql);
 $query->execute();
